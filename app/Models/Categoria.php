@@ -10,5 +10,12 @@ class Categoria extends Model
     use HasFactory;
 
     protected $table = "categoria";
+    protected  $primaryKey = 'id_categoria';
     protected $fillable = ['nombre_categoria','alias','active'];
+
+  
+  public function productos()
+  {
+      return $this->hasMany(Producto::class,'id_categoria');
+  }
 }

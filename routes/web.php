@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::resource('servicios', ServicioController::class);
+Route::resource('productos', ProductoController::class);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
