@@ -1,6 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Nuevo producto')
+
+@section('css')
+  <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@stop
 
 @section('content_header')
     <h1>Nuevo Producto</h1>
@@ -21,11 +26,11 @@
 </div>
 
 @endif
-<form action="/productos"  enctype="multipart/form-data" method="POST">
+<form action="/productos" class="dropzone dz-clickable" id="dd" enctype="multipart/form-data" method="POST">
     @csrf
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
-    <input id="codigo" name="nombre" type="text" class="form-control" tabindex="1">    
+    <input  name="nombre" type="text" class="form-control" tabindex="1">    
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
@@ -47,27 +52,19 @@
     <input type="file" id="imagen" name="imagen" >
   </div>
 
-  <div class="mb-3">
-    <label for="" class="form-label">Imagenes </label>
-  <form action="/target" class="dropzone" id="my-great-dropzone"></form>
-  </div>
+  <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
 
-
-
-  
+ 
 
 
   <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
 </form>
 
-<div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
+
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-@stop
+
 
 @section('js')
 
@@ -82,7 +79,7 @@ function filePreview(input){
   if(input.files && input.files[0]){
     var reader = new FileReader();
     reader.onload = function(e){
-      $('#imagenPreview').html("<img width=600 class='img-fluid' src='"+e.target.result+"' />");
+      $('#imagenPreview').html("<img width=100 class='img-fluid' src='"+e.target.result+"' />");
     }
     reader.readAsDataURL(input.files[0]);
   }
@@ -92,8 +89,15 @@ $('#imagen').change(function(){
   filePreview(this);
 })
 
+
+
 });
+
+
+
 </script>
+
+
 @stop
 
 

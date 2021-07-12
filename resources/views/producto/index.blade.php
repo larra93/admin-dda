@@ -1,6 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Productos')
+
+@section('css')
+    <!-- <link rel="stylesheet" href="/css/admin_custom.css">-->
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+   
+@stop
 
 @section('content_header')
     <h1>Productos</h1>
@@ -18,6 +25,7 @@
         <th scope="col">ID</th>
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
+        <th scope="col">Categoría</th>
         <th scope="col">Imagen</th>
         <th scope="col">Acciones</th>
       </tr>
@@ -31,6 +39,7 @@
           <td>{{$producto->id_producto}}</td>
           <td>{{$producto->nombre_producto}}</td>
           <td>{{$desc }}</td>
+          <td>{{$producto->nombre_categoria }}</td>
           <td><img src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" width=100 > </td>
           <td>
           
@@ -105,12 +114,7 @@
 @stop
 
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
-   
-@stop
+
 
 
 @section('js')
