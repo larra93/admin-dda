@@ -76,26 +76,35 @@ class ProductoController extends Controller
 
             $imagen = $request->file('imagen');
 
+         
             $producto = Producto::create([
                 'nombre_producto'=>$request->nombre,
                 'descripcion_producto'=>$request->descripcion,
                 'precio'=> 11,
-                'imagen_destacada'=>$this->subirImagenes($imagen,public_path('images/productos')),
+                'imagen_destacada'=>$this->subirImagenes($imagen, public_path('images/productos')),
                 'id_categoria'=>$request->categoria,
             ]); 
     
+            $ultimoProducto = Producto::latest('id_producto')->first();
 
-           /* $imagenes = $request->file('imagenes');
-            if ($request->hasFile('imagenes')) {
-                foreach($imagenes as $imagenProducto){
-                    $producto = ImagenProducto::create([
-
-                    ]);
             
-                }
-            }
-*/
+          
 
+       
+            if ($request->hasFile('imagenes')) {
+
+                $imagenes = $request->file('imagenes');
+                foreach($imagenes as $imagenProducto){
+         
+                    $producto = ImagenProducto::create([
+                    'nombre_imagen'=> $request->nombre,
+                    'imagen' => $this->subirImagenes($imagenProducto, public_path('images/productos')),
+                    'id_producto'=> $ultimoProducto->id_producto
+                ]);
+                   
+                }
+
+        }
             return redirect('/productos')->with('Result',[
                 'status' => 'success',
                 'content' => 'Producto registrado con exito'
@@ -113,21 +122,22 @@ class ProductoController extends Controller
 
 
 
-    public function subirImagenes($imagen, $carpeta)
+    public function subirImagenes($file, $carpeta)
     {
-        $nombreImagen = time().'.'.$imagen->getClientOriginalExtension();
-        $destino = $carpeta;
-        $imagen->move($destino, $nombreImagen);
-        $red = Image::make($destino.'/'.$nombreImagen);
+       $destinationPath =  $carpeta; 
+        $filename = uniqid().'_'.time() . '.' . $file->getClientOriginalExtension();
+             
 
-        $red->resize(200,null, function($constraint){
-                 $constraint->aspectRatio();
-        
-        });
-                
-        $red->save($destino.'/thumbs/'.$nombreImagen);
+        if ($file->move($destinationPath.'/' , $filename)) { 
 
-        return $nombreImagen;
+            $red = Image::make($destinationPath.'/'.$filename);
+            $red->resize(200,null, function($constraint){
+                $constraint->aspectRatio();
+            });
+            $red->save($destinationPath.'/thumbs/'.$filename);
+            return $filename; 
+     } 
+       
    
   }
 

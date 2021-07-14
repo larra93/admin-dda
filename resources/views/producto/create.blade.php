@@ -4,7 +4,8 @@
 
 @section('css')
   <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  
 @stop
 
 @section('content_header')
@@ -26,7 +27,7 @@
 </div>
 
 @endif
-<form action="/productos" class="dropzone dz-clickable" id="dd" enctype="multipart/form-data" method="POST">
+<form action="/productos"   enctype="multipart/form-data" method="POST">
     @csrf
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
@@ -34,7 +35,7 @@
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
-    <input id="descripcion" name="descripcion" type="text" class="form-control" tabindex="2">
+    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion"></textarea>
   </div>
   <div class="mb-3">
     <label for="exampleFormControlSelect1">Categoría</label>
@@ -52,6 +53,11 @@
     <input type="file" id="imagen" name="imagen" >
   </div>
 
+  <div class="mb-3">
+    <input type="file" name="imagenes[]" id="image" multiple >
+  </div>
+
+
   <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
 
  
@@ -68,11 +74,7 @@
 
 @section('js')
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
- 
-
-
-
+<script src="{{ asset('/js/admin.js')}}"></script>
 <script>
 $(document).ready(function() {
 function filePreview(input){
