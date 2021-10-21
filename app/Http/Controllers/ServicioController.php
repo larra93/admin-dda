@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Servicio;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
@@ -64,10 +65,12 @@ class ServicioController extends Controller
                 'nombre'=>'required|min:3',
                 'descripcion'=>'required',
                 'imagen'=>'required|image|mimes:jpg,jpeg,png',
-                'descripcion'=>'required',
                 'categoria'=>'required'
                 
             ]);
+
+            
+            
 
             if($validator->fails()){
                 return back()
@@ -138,7 +141,20 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+
+    
+        $servicio = DB::table('servicios as s')
+					->select('c.nombre_categoria','s.*')
+                    ->join('categoria as c', 'c.id_categoria', '=', 's.id_categoria')
+					->where('s.id_servicio', $id)
+					->first();
+
+
+        $categorias = Categoria::all()
+                      ->where('active', 1);
+        return view('servicio.editar',compact('servicio','categorias'));
+
     }
 
     /**
@@ -150,7 +166,6 @@ class ServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         
         $servicio = Servicio::find($id);
         $imagenPrevia = $servicio->imagen;

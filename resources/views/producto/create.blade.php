@@ -4,6 +4,7 @@
 
 @section('css')
   <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
   
   
 @stop
@@ -27,7 +28,7 @@
 </div>
 
 @endif
-<form action="/productos"   enctype="multipart/form-data" method="POST">
+<form action="/productos"  enctype="multipart/form-data" method="POST">
     @csrf
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
@@ -36,6 +37,10 @@
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
     <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion"></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">Precio</label>
+    <input type="number" class="form-control" name="precio">
   </div>
   <div class="mb-3">
     <label for="exampleFormControlSelect1">Categoría</label>
@@ -60,23 +65,38 @@
 
   <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
 
+  
+
  
 
 
   <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-</form>
 
+
+
+  
 
 @stop
 
 
 
 @section('js')
-
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-9WciDs0XP20sojTJ9E7mChDXy6pcO0qHpwbEJID1YVavz2H6QBz5eLoDD8lseZOb2yGT8xDNIV7HIe1ZbuiDWg==" crossorigin="anonymous"></script>
 <script src="{{ asset('/js/admin.js')}}"></script>
 <script>
 $(document).ready(function() {
+
+  
+
+
+
+
+
+
+
+
 function filePreview(input){
   if(input.files && input.files[0]){
     var reader = new FileReader();
@@ -95,6 +115,12 @@ $('#imagen').change(function(){
 
 });
 
+
+ClassicEditor
+        .create( document.querySelector( '#descripcion' ) )
+        .catch( error => {
+            console.error( error );
+        } );
 
 
 </script>

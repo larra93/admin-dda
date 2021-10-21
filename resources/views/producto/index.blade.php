@@ -15,7 +15,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
   <a href="productos/create" class="btn btn-primary">CREAR</a>
   
   <div class="table-responsive-sm">
@@ -43,16 +43,19 @@
           <td><img src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" width=100 > </td>
           <td>
           
-           
+          
           <form action="{{ route ('productos.destroy',$producto->id_producto)}}" class="form-eliminar" method="POST">
             @csrf
             @method('DELETE')
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEditar{{$producto->id_producto}}">
-              Editar 
-            </button>
-            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <a href="{{ url('productos/'.$producto->id_producto.'/edit')}}"><i class="fa fa-edit"></i></a> 
+               
+                <button type="submit" class="btn btn-danger col-md-12 m-0 p-0">Eliminar</button>
+               </div>
+          </div>
             </form>  
-  
+         
           <!-- Modal -->
             <div class="modal fade"id="modalEditar{{$producto->id_producto}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">

@@ -7,6 +7,7 @@ use App\Models\ImagenProducto;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use DB;
 
 class ProductoController extends Controller
 {
@@ -61,7 +62,7 @@ class ProductoController extends Controller
                 'nombre'=>'required|min:3',
                 'descripcion'=>'required',
                 'imagen'=>'required|image|mimes:jpg,jpeg,png',
-                 //'precio'=>'required|number',
+                 'precio'=>'required|number',
                 'categoria'=>'required'
                 
             ]);
@@ -80,7 +81,7 @@ class ProductoController extends Controller
             $producto = Producto::create([
                 'nombre_producto'=>$request->nombre,
                 'descripcion_producto'=>$request->descripcion,
-                'precio'=> 11,
+                'precio'=> $request->precio,
                 'imagen_destacada'=>$this->subirImagenes($imagen, public_path('images/productos')),
                 'id_categoria'=>$request->categoria,
             ]); 
@@ -163,7 +164,23 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto = DB::table('producto as p')
+					->select('c.nombre_categoria','p.*')
+                    ->join('categoria as c', 'c.id_categoria', '=', 'p.id_categoria')
+					->where('p.id_producto', $id)
+					->first();
+
+        $productoImagen  = DB::table('producto as p')
+					->select('im.imagen','p.*')
+                    ->join('imagen_producto as im', 'im.id_producto', '=', 'p.id_producto')
+					->where('p.id_producto', $id)
+					->get();
+
+                    
+
+        $categorias = Categoria::all()
+                      ->where('active', 1);
+        return view('producto.editar',compact('producto','categorias','productoImagen'));
     }
 
     /**
@@ -175,7 +192,73 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $producto = Producto::find($id);
+        $imagenPreviaDestacada = $producto->imagen_destacada;
+
+
+       
+
+            $validator = Validator::make($request->all(),[
+                'nombre'=>'required|min:3',
+                'descripcion'=>'required',
+                 //'precio'=>'required|number',
+                'categoria'=>'required'
+                
+            ]);
+
+            if($validator->fails()){
+                return back()
+                ->withInput()
+                ->with('ErrorInsert','Favor llenar los datos')
+                ->withErrors($validator);
+            }
+            
+            if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+
+            $producto->nombre_producto= $request->nombre;
+              $producto->descripcion_producto= $request->descripcion;
+              $producto->precio= $request->precio;
+              $producto->imagen_destacada = $this->subirImagenes($imagen, public_path('images/productos'));
+              $producto->id_categoria= $request->categoria;
+              $producto->save();
+
+            }else{
+            $producto->nombre_producto= $request->nombre;
+              $producto->descripcion_producto= $request->descripcion;
+              $producto->precio= $request->precio;
+              $producto->id_categoria= $request->categoria;
+              $producto->save();
+
+               
+            }
+
+            if ($request->hasFile('imagenes')) {
+
+                $imagenes = $request->file('imagenes');
+                foreach($imagenes as $imagenProducto){
+         
+                    $producto = ImagenProducto::create([
+                    'nombre_imagen'=> $request->nombre,
+                    'imagen' => $this->subirImagenes($imagenProducto, public_path('images/productos')),
+                    'id_producto'=> $id
+                ]);
+                   
+                }
+
+        }
+          
+
+       
+            
+            return redirect('/productos')->with('Result',[
+                'status' => 'success',
+                'content' => 'Producto registrado con exito'
+            ]);
+          
+
+      
     }
 
     /**

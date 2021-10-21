@@ -18,7 +18,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="" class="form-label">Descripción</label>
-                    <textarea name="descripcion" class="form-control" rows="10">{{$servicio->descripcion_servicio}}</textarea>
+                    <textarea name="descripcion" id="descripcion" class="form-control" rows="10">{!!$servicio->descripcion_servicio!!}</textarea>
                   </div>
                   <label for="exampleFormControlSelect1">Categoría</label>
                 <select class="form-control" name="categoria" id="categoria">
@@ -46,3 +46,19 @@
               </div>
             </div>
           </div>
+
+          @section('js')
+ 
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+<script>
+
+
+
+    ClassicEditor
+        .create( document.querySelector( '#descripcion' ) )
+        .catch( error => {
+           
+        } );
+
+</script>
+@stop

@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 <a href="servicios/create" class="btn btn-primary">CREAR</a>
 
 <div class="table-responsive-sm">
@@ -33,22 +33,27 @@
     <tr>
         <td>{{$servicio->id_servicio}}</td>
         <td>{{$servicio->nombre_servicio}}</td>
-        <td>{{$servicio->descripcion_servicio}}</td>
+        <td>{!!$servicio->descripcion_servicio!!}</td>
+     
         <td><img src="{{ asset('images/servicios/thumbs/'.$servicio->imagen) }}" width=100 > </td>
         <td>
+
+          @csrf
+          @method('PUT')
+          <button class="btn btn-round btnEditar"> 
+            <a href="{{ url('servicios/'.$servicio->id_servicio.'/edit')}}"><i class="fa fa-edit"></i></a> 
+            </button>
         
          
         <form action="{{ route ('servicios.destroy',$servicio->id_servicio)}}" class="form-eliminar" method="POST">
           @csrf
           @method('DELETE')
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEditar{{$servicio->id_servicio}}">
-            Editar 
-          </button>
-          <button type="submit" class="btn btn-danger">Eliminar</button>
-          </form>  
-
-        @include('servicio.modal-servicio')
-
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <button type="submit" class="btn btn-danger col-md-12 m-0 p-0">Eliminar </button>
+             </div>
+        </div>
+          </form> 
         </td>        
     </tr>
     @endforeach
@@ -80,6 +85,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
 @if ( session()->has('Result'))
 
 <script>
@@ -143,6 +149,13 @@
         }
     });
 } );
+
+
+ClassicEditor
+        .create( document.querySelector( '#descripcion' ) )
+        .catch( error => {
+           
+        } );
 </script>
 @stop
 

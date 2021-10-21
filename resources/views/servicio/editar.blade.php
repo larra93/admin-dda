@@ -21,25 +21,31 @@
 </div>
 
 @endif
-<form action="/servicios"  enctype="multipart/form-data" method="POST">
+<form action="/servicios/{{$servicio->id_servicio}}"   enctype="multipart/form-data" method="POST">
     @csrf
+    @method('PUT')
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
-    <input id="codigo" name="nombre" type="text" class="form-control" tabindex="1">    
+    <input id="codigo" name="nombre" type="text" value="{{$servicio->nombre_servicio}}" class="form-control" tabindex="1">    
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
-    <textarea name="descripcion" id="descripcion"></textarea>
+    <textarea name="descripcion" id="descripcion">{{$servicio->descripcion_servicio}}</textarea>
   </div>
   <div class="mb-3">
     <label for="exampleFormControlSelect1">Categoría</label>
     <select class="form-control" name="categoria" id="categoria">
 
     @foreach($categorias as $category)
+    @if( $servicio->id_categoria == $category->id_categoria)
+    <option  value="{{$servicio->id_categoria}} "  selected>{{$servicio->nombre_categoria}}  </option>
+    @else
                 
-                <option value="{{$category->id_categoria}}">{{$category->nombre_categoria}}</option>
-                
-                @endforeach
+    <option value="{{$category->id_categoria}}">{{$category->nombre_categoria}}</option>
+    @endif           
+    @endforeach
+
+    
     </select>  
     </div>
   <div class="mb-3">
