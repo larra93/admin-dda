@@ -22,6 +22,9 @@ Route::get('/', function () {
 Route::resource('servicios', ServicioController::class);
 Route::resource('productos', ProductoController::class);
 
+Route::get('eliminarImagenProducto/{id}', [ProductoController::class, 'eliminarImagen'])->name('eliminarImagen');
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

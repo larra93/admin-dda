@@ -171,9 +171,10 @@ class ProductoController extends Controller
 					->first();
 
         $productoImagen  = DB::table('producto as p')
-					->select('im.imagen','p.*')
+					->select('im.*','p.*')
                     ->join('imagen_producto as im', 'im.id_producto', '=', 'p.id_producto')
 					->where('p.id_producto', $id)
+					->where('im.active', 1)
 					->get();
 
                     
@@ -269,6 +270,24 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd("prueba");
+    }
+
+
+    public function eliminarImagen($id)
+    {
+        $imagen = ImagenProducto::find($id);
+        $imagenPrevia = $imagen->imagen;
+
+        $imagen->active = 0;
+        $imagen->save();
+        $destino = public_path('images/productos');
+        unlink($destino.'/'.$imagenPrevia);
+        unlink($destino.'/thumbs/'.$imagenPrevia);
+        return back()->with('Listo','Registro eliminado exitosamente');
+
+        
+        
+
     }
 }

@@ -41,7 +41,7 @@
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
-    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion">{{$producto->descripcion_producto}}</textarea>
+    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion">{!! htmlspecialchars($producto->descripcion_producto) !!}</textarea>
   </div>
 
   <div class="mb-3">
@@ -87,10 +87,10 @@
         @foreach ($productoImagen as $imagen_producto)
         <div class="col-sm-3">
             <a href="{{ asset('images/productos/'.$imagen_producto->imagen) }}" class="fancybox" rel="ligthbox">
-                <img class="zoom img-fluid " src="{{ asset('images/productos/thumbs/'.$imagen_producto->imagen) }}" >              
+                <img class="img-fluid mb-2" src="{{ asset('images/productos/thumbs/'.$imagen_producto->imagen) }}" >              
             </a>
           <br>
-          <a href="" class="texto-encima"><i class="fas fa-trash-alt" style="color: white"></i></a>
+          <a href="{{ route('eliminarImagen',$imagen_producto->id_imagen) }}" id="borrarImagen" class="texto-encima"><i class="fas fa-trash-alt" style="color: white"></i></a>
         </div>
         @endforeach
       </div>
@@ -118,10 +118,25 @@
 @section('js')
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
 <script src="{{ asset('/js/admin.js')}}"></script>
+
+
+@if ( session()->has('Result'))
+
+<script>
+    $(function(){
+        toastr.{{ session('Result')['status'] }}('{{session('Result')['content'] }}')
+    });
+
+    
+</script>
+@endif
 <script>
 $(document).ready(function() {
+
+  
 
     $(".fancybox").fancybox({
         openEffect: "none",
