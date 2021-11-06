@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +22,13 @@ Route::get('/', function () {
 
 Route::resource('servicios', ServicioController::class);
 Route::resource('productos', ProductoController::class);
+Route::resource('clientes', ClienteController::class);
+
 
 Route::get('eliminarImagenProducto/{id}', [ProductoController::class, 'eliminarImagen'])->name('eliminarImagen');
+Route::post('/guardarImagen', [ProductoController::class, 'guardarImagen']);
+
+
 
 
 

@@ -299,6 +299,11 @@ return [
             'url'  => 'productos',
             'icon' => 'fas fa-gift',
         ],
+        [
+            'text' => 'Clientes',
+            'url'  => 'clientes',
+            'icon' => 'fas fa-fw fa-user',
+        ],
     ],
 
     /*

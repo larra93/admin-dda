@@ -56,69 +56,53 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
        
-        try{
-
-            $validator = Validator::make($request->all(),[
-                'nombre'=>'required|min:3',
-                'descripcion'=>'required',
-                'imagen'=>'required|image|mimes:jpg,jpeg,png',
-                 'precio'=>'required|number',
-                'categoria'=>'required'
-                
-            ]);
-
-            if($validator->fails()){
-                return back()
-                ->withInput()
-                ->with('ErrorInsert','Favor llenar los datos')
-                ->withErrors($validator);
-            }
-            
-
             $imagen = $request->file('imagen');
+           
 
-         
-            $producto = Producto::create([
-                'nombre_producto'=>$request->nombre,
-                'descripcion_producto'=>$request->descripcion,
-                'precio'=> $request->precio,
-                'imagen_destacada'=>$this->subirImagenes($imagen, public_path('images/productos')),
-                'id_categoria'=>$request->categoria,
-            ]); 
-    
-            $ultimoProducto = Producto::latest('id_producto')->first();
+            try{
 
-            
-          
-
-       
-            if ($request->hasFile('imagenes')) {
-
-                $imagenes = $request->file('imagenes');
-                foreach($imagenes as $imagenProducto){
-         
-                    $producto = ImagenProducto::create([
-                    'nombre_imagen'=> $request->nombre,
-                    'imagen' => $this->subirImagenes($imagenProducto, public_path('images/productos')),
-                    'id_producto'=> $ultimoProducto->id_producto
+                $validator = Validator::make($request->all(),[
+                    'nombre'=>'required|min:3',
+                    'descripcion'=>'required',
+                    'precio'=>'required',
+                    'imagen'=>'required|image|mimes:jpg,jpeg,png',
+                    'categoria'=>'required'
+                    
                 ]);
-                   
+    
+            
+    
+                if($validator->fails()){
+                    return back()
+                    ->withInput()
+                    ->with('ErrorInsert','Favor llenar los datos')
+                    ->withErrors($validator);
                 }
 
-        }
-            return redirect('/productos')->with('Result',[
-                'status' => 'success',
-                'content' => 'Producto registrado con exito'
-            ]);
-          
 
+            $producto = new Producto;
+            $producto->nombre_producto = $request->nombre;
+            $producto->descripcion_producto = $request->descripcion;
+            $producto->precio = $request->precio;
+            $producto->imagen_destacada = $this->subirImagenes($imagen, public_path('images/productos'));
+            $producto->id_categoria = $request->categoria;
+            $producto->save();
+            $producto_id = $producto->id_producto;
+            //$ultimoProducto = Producto::latest('id_producto')->first();
+
+            
+
+    
+        return response()->json(['status'=>"success", 'user_id'=>$producto_id]);
+          
     }catch(\Exception $e){
 
         return back()
-        ->withInput()
-        ->with('ErrorInsert','Error en al registrar' . $e->getMessage())
-        ->withErrors($validator);
+            ->withInput()
+            ->with('ErrorInsert','Error en al registrar' . $e->getMessage())
+            ->withErrors($validator);
     }
+    
     }
 
 
@@ -249,10 +233,7 @@ class ProductoController extends Controller
                 }
 
         }
-          
-
-       
-            
+                
             return redirect('/productos')->with('Result',[
                 'status' => 'success',
                 'content' => 'Producto registrado con exito'
@@ -284,10 +265,55 @@ class ProductoController extends Controller
         $destino = public_path('images/productos');
         unlink($destino.'/'.$imagenPrevia);
         unlink($destino.'/thumbs/'.$imagenPrevia);
-        return back()->with('Listo','Registro eliminado exitosamente');
+        return redirect('/clientes')->with('Result',[
+            'status' => 'success',
+            'content' => 'Cliente eliminado con exito'
+        ]);
+            
+    }
 
+   public function guardarImagen(Request $request){
+
+    
+    if ($request->hasFile('imagenes')) {
         
-        
+        $imagenes = $request->file('imagenes');
+      
+
+        foreach($imagenes as $imagen){
+            $filename = uniqid().'_'.time() . '.' . $imagen->getClientOriginalExtension();
+            $imagen_ = ImagenProducto::create([
+            'nombre_imagen'=> $filename,
+            'imagen' => $this->subirImagenes($imagen, public_path('images/productos')),
+            'id_producto'=> $request->userid
+        ]);
 
     }
+           
+}
+        return response()->json(['status'=>"success",'imgdata'=>$request->nombre,'userid'=>$request->userid]);
+    }
+
+    public function guardarImagenGaleria(Request $request){
+
+   
+        if ($request->hasFile('file')) {
+            
+            $imagenes = $request->file('file
+            ');
+          
+    
+            foreach($imagenes as $imagen){
+                $filename = uniqid().'_'.time() . '.' . $imagen->getClientOriginalExtension();
+                $imagen_ = ImagenProducto::create([
+                'nombre_imagen'=> $filename,
+                'imagen' => $this->subirImagenes($imagen, public_path('images/productos')),
+                'id_producto'=> $request->id_producto
+            ]);
+    
+        }
+               
+    }
+            return response()->json(['status'=>"success",'imgdata'=>$request->nombre,'userid'=>$request->id_producto]);
+        }
 }

@@ -5,7 +5,21 @@
 @section('css')
   <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
-  
+  <style>
+    .dropzoneDragArea {
+      background-color: #fbfdff;
+      border: 1px dashed #c0ccda;
+      border-radius: 6px;
+      padding: 60px;
+      text-align: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+  }
+  .dropzone{
+    box-shadow: 0px 2px 20px 0px #f2f2f2;
+    border-radius: 10px;
+  }
+  </style>
   
 @stop
 
@@ -28,9 +42,10 @@
 </div>
 
 @endif
-<form action="/productos"  enctype="multipart/form-data" method="POST">
+  <form action="/productos" name="demoform" id="demoform" method="POST" class="dropzone" enctype="multipart/form-data">
     @csrf
   <div class="mb-3">
+    <input type="hidden" class="userid" name="userid" id="userid" value="">
     <label for="" class="form-label">Nombre</label>
     <input  name="nombre" type="text" class="form-control" tabindex="1">    
   </div>
@@ -58,14 +73,16 @@
     <input type="file" id="imagen" name="imagen" >
   </div>
 
-  <div class="mb-3">
-    <input type="file" name="imagenes[]" id="image" multiple >
+  <div class="form-group">
+    <div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
+      <span>Upload file</span>
+    </div>
+    <div class="dropzone-previews"></div>
   </div>
 
 
-  <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
 
-  
+
 
  
 
@@ -73,7 +90,7 @@
   <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
 
-
+</form>
 
   
 
@@ -83,19 +100,109 @@
 
 @section('js')
 <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-9WciDs0XP20sojTJ9E7mChDXy6pcO0qHpwbEJID1YVavz2H6QBz5eLoDD8lseZOb2yGT8xDNIV7HIe1ZbuiDWg==" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('/js/admin.js')}}"></script>
 <script>
+
+Dropzone.autoDiscover = false;
+// Dropzone.options.demoform = false;	
+let token = $('meta[name="csrf-token"]').attr('content');
+$(function() {
+var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+	paramName: "imagenes",
+	url: "{{ url('guardarImagen') }}",
+	previewsContainer: 'div.dropzone-previews',
+	addRemoveLinks: true,
+	autoProcessQueue: false,
+	uploadMultiple: true,
+  parallelUploads: 10,
+  maxFiles: 10,
+	params: {
+        _token: token
+    },
+	 // The setting up of the dropzone
+	init: function() {
+	    var myDropzone = this;
+    
+	    //form submission code goes here
+	    $("form[name='demoform']").submit(function(event) {
+	    	//Make sure that the form isn't actully being sent.
+	    	event.preventDefault();
+	    	URL = $("#demoform").attr('action');
+	    	//formData = $('#demoform').serialize();
+        let formData = new FormData($('#demoform')[0]);
+       
+	    	$.ajax({
+	    		type: 'POST',
+	    		url: URL,
+	    		data: formData,
+          contentType: false,
+          processData: false,
+	    		success: function(result){
+	    			if(result.status == "success"){
+	    				// fetch the useid 
+	    				var userid = result.user_id;
+						$("#userid").val(userid); // inseting userid into hidden input field
+	    				//process the queue
+	    				myDropzone.processQueue();
+	    			}else{
+	    				console.log("error");
+	    			}
+	    		}
+	    	});
+	    });
+	    //Gets triggered when we submit the image.
+	    this.on('sending', function(file, xhr, formData){
+	    //fetch the user id from hidden input field and send that userid with our image
+	      let userid = document.getElementById('userid').value;
+		   formData.append('userid', userid);
+		});
+		
+	    this.on("success", function (file, response) {
+        Swal.fire({
+      icon: 'success',
+      title: 'Producto guardado con éxito',
+      showConfirmButton: false,
+      timer: 2000
+    })
+        ;
+        //reset the form
+        $('#demoform')[0].reset();
+            //reset dropzone
+            $('.dropzone-previews').empty();
+        });
+
+
+        this.on("queuecomplete", function () {
+          
+        });
+		
+        // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+	    // of the sending event because uploadMultiple is set to true.
+	    this.on("sendingmultiple", function() {
+	      // Gets triggered when the form is actually being sent.
+	      // Hide the success button or the complete form.
+	    });
+		
+	    this.on("successmultiple", function(files, response) {
+	      // Gets triggered when the files have successfully been sent.
+	      // Redirect user or notify of success.
+	    });
+		
+	    this.on("errormultiple", function(files, response) {
+	      // Gets triggered when there was an error sending the files.
+	      // Maybe show form again, and notify user of error
+	    });
+	}
+	});
+});
+
+
+
 $(document).ready(function() {
 
   
-
-
-
-
-
-
-
 
 function filePreview(input){
   if(input.files && input.files[0]){

@@ -5,8 +5,27 @@
 @section('css')
   <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/app.css">
   
+
+  <style>
+     .dropzoneDragArea {
+      background-color: #fbfdff;
+      border: 1px dashed #c0ccda;
+      border-radius: 6px;
+      padding: 60px;
+      text-align: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+  }
+  .dropzone{
+    box-shadow: 0px 2px 20px 0px #f2f2f2;
+    border-radius: 10px;
+  }
+  </style>
+
+
 @stop
 
 @section('content_header')
@@ -70,9 +89,9 @@
     
   </div>
 
-  <div class="mb-3">
-    <input type="file" name="imagenes[]" id="image" multiple >
-  </div>
+
+
+  
 
   <div class="container-fluid">
     <div class ="card card-primary card-outline">
@@ -94,21 +113,47 @@
         </div>
         @endforeach
       </div>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalGaleria{{$producto->id_producto}}">Agregar imagenes</button> 
       </div>
 </div>
 <br>
 
 
 
-
-  
-
- 
-
-
-  <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+  <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
 </form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalGaleria{{$producto->id_producto}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url('guardarImagen')}}" id="demoform" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
+          @csrf
+          <input type="hidden" name="id_producto" name="id_producto">
+          <div class="form-group">
+            <div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
+              <span>Seleccione o arrastre imagenes.</span>
+            </div>
+            <div class="dropzone-previews"></div>
+          </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 @stop
@@ -118,6 +163,7 @@
 @section('js')
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
 <script src="{{ asset('/js/admin.js')}}"></script>
@@ -134,9 +180,16 @@
 </script>
 @endif
 <script>
+
+Dropzone.options.myGreatDropzone = { // camelized version of the `id`
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg, .jpg, .png',
+  };
+
 $(document).ready(function() {
 
-  
+ 
 
     $(".fancybox").fancybox({
         openEffect: "none",
