@@ -126,7 +126,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalGaleria{{$producto->id_producto}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" class="modal_galeria" id="modalGaleria{{$producto->id_producto}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -136,9 +136,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ url('guardarImagen')}}" id="demoform" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
+        <form action="{{ url('guardarImagenGaleria')}}" id="demoform" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
           @csrf
-          <input type="hidden" name="id_producto" name="id_producto">
+          <input type="hidden" name="id_producto" name="id_producto" value="{{$producto->id_producto}}">
           <div class="form-group">
             <div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
               <span>Seleccione o arrastre imagenes.</span>
@@ -148,7 +148,7 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" id="uploadfiles" class="btn btn-primary">Guardar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -180,16 +180,60 @@
 </script>
 @endif
 <script>
-
+/*
 Dropzone.options.myGreatDropzone = { // camelized version of the `id`
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 2, // MB
+    addRemoveLinks: true,
+    autoProcessQueue: false,
     acceptedFiles: '.jpeg, .jpg, .png',
-  };
 
+    init: function () {
+      myGreatDropzone.on("complete", function (file) {
+     
+        window.location.reload();
+      
+    });
+  }
+    
+  };*/
+
+
+  Dropzone.autoDiscover = false;
+
+var myDropzone = new Dropzone(".dropzone", { 
+   addRemoveLinks: true,
+	 autoProcessQueue: false,
+	 uploadMultiple: true,
+   parallelUploads: 10
+});
+
+$('#uploadfiles').click(function(){
+   myDropzone.processQueue();
+
+   myDropzone.on("complete", function (file) {
+     
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto guardado con éxito',
+      showConfirmButton: false,
+      timer: 2000
+    }).then(function() {
+        window.location.reload(); 
+    });
+ 
+
+   
+   
+ });
+});
+  
+  
+  
 $(document).ready(function() {
 
  
+
 
     $(".fancybox").fancybox({
         openEffect: "none",

@@ -251,7 +251,18 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        dd("prueba");
+        $producto = Producto::find($id);
+        $imagenPreviaDestacada = $producto->imagen_destacada;
+
+        $producto->active = 0;
+        $producto->save();
+        $destino = public_path('images/productos');
+        unlink($destino.'/'.$imagenPreviaDestacada);
+        unlink($destino.'/thumbs/'.$imagenPreviaDestacada);
+        return redirect('/productos')->with('Result',[
+            'status' => 'success',
+            'content' => 'Producto eliminado con exito'
+        ]);
     }
 
 
@@ -298,14 +309,10 @@ class ProductoController extends Controller
 
    
         if ($request->hasFile('file')) {
-            
-            $imagenes = $request->file('file
-            ');
-          
-    
+            $imagenes = $request->file('file');
             foreach($imagenes as $imagen){
                 $filename = uniqid().'_'.time() . '.' . $imagen->getClientOriginalExtension();
-                $imagen_ = ImagenProducto::create([
+                $imagen_producto = ImagenProducto::create([
                 'nombre_imagen'=> $filename,
                 'imagen' => $this->subirImagenes($imagen, public_path('images/productos')),
                 'id_producto'=> $request->id_producto
@@ -314,6 +321,6 @@ class ProductoController extends Controller
         }
                
     }
-            return response()->json(['status'=>"success",'imgdata'=>$request->nombre,'userid'=>$request->id_producto]);
+            return response()->json(['status'=>"success",'imgdata'=>$imagen,'userid'=>$request->id_producto]);
         }
 }

@@ -143,6 +143,14 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
 	    			if(result.status == "success"){
 	    				// fetch the useid 
 	    				var userid = result.user_id;
+                Swal.fire({
+                icon: 'success',
+                title: 'Producto guardado con éxito',
+                showConfirmButton: false,
+                timer: 2000
+              }).then(function() {
+              +window.location.reload(); 
+    });
 						$("#userid").val(userid); // inseting userid into hidden input field
 	    				//process the queue
 	    				myDropzone.processQueue();
@@ -160,13 +168,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
 		});
 		
 	    this.on("success", function (file, response) {
-        Swal.fire({
-      icon: 'success',
-      title: 'Producto guardado con éxito',
-      showConfirmButton: false,
-      timer: 2000
-    })
-        ;
+       
         //reset the form
         $('#demoform')[0].reset();
             //reset dropzone

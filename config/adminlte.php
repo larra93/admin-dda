@@ -304,6 +304,11 @@ return [
             'url'  => 'clientes',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Categorías',
+            'url'  => 'categorias',
+            'icon' => 'fas fa-fw fa-user',
+        ],
     ],
 
     /*

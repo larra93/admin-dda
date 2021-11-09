@@ -38,7 +38,8 @@
 
           <td>{{$producto->id_producto}}</td>
           <td>{{$producto->nombre_producto}}</td>
-          <td>{{$desc }}</td>
+          <td>{!!$desc !!}</td>
+          
           <td>{{$producto->nombre_categoria }}</td>
           <td><img src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" width=100 > </td>
           <td>

@@ -11,7 +11,8 @@ class Categoria extends Model
 
     protected $table = "categoria";
     protected  $primaryKey = 'id_categoria';
-    protected $fillable = ['nombre_categoria','alias','active'];
+    public $timestamps = false;
+    protected $fillable = ['nombre_categoria','alias','active','update_at','create_at'];
 
   
   public function productos()

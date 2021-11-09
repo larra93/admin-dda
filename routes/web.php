@@ -3,6 +3,7 @@
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CategoriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,10 +24,12 @@ Route::get('/', function () {
 Route::resource('servicios', ServicioController::class);
 Route::resource('productos', ProductoController::class);
 Route::resource('clientes', ClienteController::class);
+Route::resource('categorias', CategoriaController::class);
 
 
 Route::get('eliminarImagenProducto/{id}', [ProductoController::class, 'eliminarImagen'])->name('eliminarImagen');
 Route::post('/guardarImagen', [ProductoController::class, 'guardarImagen']);
+Route::post('/guardarImagenGaleria', [ProductoController::class, 'guardarImagenGaleria'])->name('guardarImagenGaleria');
 
 
 
