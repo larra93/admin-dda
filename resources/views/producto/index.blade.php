@@ -10,13 +10,15 @@
 @stop
 
 @section('content_header')
-    <h1>Productos</h1>
+<div class="alert alert-default-info" role="alert">
+ Productos
+</div>
 @stop
 
 @section('content')
 
 <div class="container-fluid">
-  <a href="productos/create" class="btn btn-primary">CREAR</a>
+  
   
   <div class="table-responsive-sm">
   <table id="productos" class="table mt-4" style="width: 100%">
@@ -34,78 +36,35 @@
       @foreach ($productos as $producto)
       <tr>
 
-        <?php $desc = substr($producto->descripcion_producto, 0, 100); ?>
+        <?php $desc = substr($producto->descripcion_producto, 0, 50); ?>
 
           <td>{{$producto->id_producto}}</td>
           <td>{{$producto->nombre_producto}}</td>
-          <td>{!!$desc !!}</td>
+          <td>{!!$desc.'...' !!}</td>
           
           <td>{{$producto->nombre_categoria }}</td>
           <td><img src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" width=100 > </td>
           <td>
-          
-          
+            @csrf
+            @method('PUT')
+          <div class="row">
+          <button class="btn btn-round btnEditar"> 
+              <a href="productos/create"><i class="fa fa-plus"></i></a>
+          </button>
+          <button class="btn btn-round btnEditar"> 
+              <a href="{{ url('/admin/productos/'.$producto->id_producto.'/edit')}}"><i class="fa fa-edit"></i></a>
+          </button>
+       
           <form action="{{ route ('productos.destroy',$producto->id_producto)}}" class="form-eliminar" method="POST">
             @csrf
             @method('DELETE')
-            <div class="row">
-              <div class="col-sm-12 text-center">
-                <a href="{{ url('productos/'.$producto->id_producto.'/edit')}}"><i class="fa fa-edit"></i></a> 
-               
-                <button type="submit" class="btn btn-danger col-md-12 m-0 p-0">Eliminar</button>
-               </div>
+            
+              <button type="submit" class="btn btn-lg" style="background-color:transparent;"><i class="fa fa-trash"></i></button>
           </div>
+
+          
+
             </form>  
-         
-          <!-- Modal -->
-            <div class="modal fade"id="modalEditar{{$producto->id_producto}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Editar producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="/productos/{{$producto->id_producto}}"   enctype="multipart/form-data" method="POST">
-                      @csrf
-                      @method('PUT')
-                    <div class="mb-3">
-                      <label for="" class="form-label">Nombre</label>
-                      <input  name="nombre" type="text" value="{{$producto->nombre_producto}}" class="form-control" tabindex="1">    
-                    </div>
-                    <div class="mb-3">
-                      <label for="" class="form-label">Descripción</label>
-                      <textarea name="descripcion" class="form-control" rows="10">{{$producto->descripcion_producto}}</textarea>
-                    </div>
-                    <label for="exampleFormControlSelect1">Categoría</label>
-                  <select class="form-control" name="categoria" id="categoria">
-                  
-                  @foreach($categorias as $categoria)
-                      @if($categoria->id_categoria == $producto->id_categoria)
-                          <option value="{{$categoria->id_categoria}}" selected>{{$categoria->nombre_categoria}}</option>
-                      @else
-                          <option value="{{$categoria->id_categoria}}">{{$categoria->nombre_categoria}}</option>
-                      @endif
-                  @endforeach
-                  </select> 
-                    <div class="mb-3">
-                      <label for="" class="form-label">Imagen</label>
-                      <input type="file" id="imagen" name="imagen" >
-                    </div>
-  
-                    <div  class ="mb-3 mt-3" id="imagenPreview"></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                  </div>
-                </form>
-                </div>
-              </div>
-            </div>
-  
           </td>        
       </tr>
       @endforeach

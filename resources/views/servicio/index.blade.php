@@ -10,12 +10,14 @@
 @stop
 
 @section('content_header')
-    <h1>Servicios</h1>
+<div class="alert alert-default-info" role="alert">
+  Servicios
+ </div>
 @stop
 
 @section('content')
 <div class="container-fluid">
-<a href="servicios/create" class="btn btn-primary">CREAR</a>
+
 
 <div class="table-responsive-sm">
 <table id="servicios" class="table mt-4" style="width: 100%">
@@ -30,29 +32,31 @@
   </thead>
   <tbody>    
     @foreach ($servicios as $servicio)
+    <?php $desc = substr($servicio->descripcion_servicio, 0, 50); ?>
     <tr>
         <td>{{$servicio->id_servicio}}</td>
         <td>{{$servicio->nombre_servicio}}</td>
-        <td>{!!$servicio->descripcion_servicio!!}</td>
+        <td>{!!$desc.'...' !!}</td>
      
         <td><img src="{{ asset('images/servicios/thumbs/'.$servicio->imagen) }}" width=100 > </td>
         <td>
 
           @csrf
-          @method('PUT')
-          <button class="btn btn-round btnEditar"> 
-            <a href="{{ url('servicios/'.$servicio->id_servicio.'/edit')}}"><i class="fa fa-edit"></i></a> 
-            </button>
-        
-         
-        <form action="{{ route ('servicios.destroy',$servicio->id_servicio)}}" class="form-eliminar" method="POST">
-          @csrf
-          @method('DELETE')
+            @method('PUT')
           <div class="row">
-            <div class="col-sm-12 text-center">
-              <button type="submit" class="btn btn-danger col-md-12 m-0 p-0">Eliminar </button>
-             </div>
-        </div>
+          <button class="btn btn-round btnEditar"> 
+              <a href="servicios/create"><i class="fa fa-plus"></i></a>
+          </button>
+          <button class="btn btn-round btnEditar"> 
+              <a href="{{ url('admin/servicios/'.$servicio->id_servicio.'/edit')}}"><i class="fa fa-edit"></i></a>
+          </button>
+       
+          <form action="{{ route ('servicios.destroy',$servicio->id_servicio)}}" class="form-eliminar" method="POST">
+            @csrf
+            @method('DELETE')
+            
+              <button type="submit" class="btn btn-round" style="background-color:transparent;"><i class="fa fa-trash"></i></button>
+          </div>
           </form> 
         </td>        
     </tr>

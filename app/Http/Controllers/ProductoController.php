@@ -11,6 +11,14 @@ use DB;
 
 class ProductoController extends Controller
 {
+
+
+    public function __construct()
+{
+    $this->middleware('auth', ['except' => ['mostrar_index', 'get_productos','detalle_producto']]);
+}
+
+
     /**
      * Display a listing of the resource.
      *
@@ -18,11 +26,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //No se como hacer la query con la relacion que hice en los modelos
-        /*$productoadas = Producto::with('categoria')
-                    ->where('active', 1)
-                    ->get();  
-        */
+        
         $productos = \DB::table('producto as p')
                     ->select('p.*', 'c.nombre_categoria')
                     ->join('categoria as c', 'c.id_categoria', '=', 'p.id_categoria')
@@ -126,19 +130,6 @@ class ProductoController extends Controller
    
   }
 
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -259,7 +250,7 @@ class ProductoController extends Controller
         $destino = public_path('images/productos');
         unlink($destino.'/'.$imagenPreviaDestacada);
         unlink($destino.'/thumbs/'.$imagenPreviaDestacada);
-        return redirect('/productos')->with('Result',[
+        return redirect('/admin/productos')->with('Result',[
             'status' => 'success',
             'content' => 'Producto eliminado con exito'
         ]);
@@ -276,7 +267,7 @@ class ProductoController extends Controller
         $destino = public_path('images/productos');
         unlink($destino.'/'.$imagenPrevia);
         unlink($destino.'/thumbs/'.$imagenPrevia);
-        return redirect('/clientes')->with('Result',[
+        return redirect('/admin/clientes')->with('Result',[
             'status' => 'success',
             'content' => 'Cliente eliminado con exito'
         ]);
@@ -322,5 +313,38 @@ class ProductoController extends Controller
                
     }
             return response()->json(['status'=>"success",'imgdata'=>$imagen,'userid'=>$request->id_producto]);
+        }
+
+
+    //Sitio web
+        public function mostrar_index()
+        {
+            return view('web.index');
+        }
+
+        public function get_productos(Type $var = null)
+        {
+            return view('web.productos');
+        }
+
+        public function detalle_producto($id)
+        {
+        $producto = DB::table('producto as p')
+					->select('p.*')
+                    ->join('categoria as c', 'c.id_categoria', '=', 'p.id_categoria')
+					->where('p.id_producto', $id)
+					->first();
+
+        $productoImagen  = DB::table('producto as p')
+					->select('im.*','p.*')
+                    ->join('imagen_producto as im', 'im.id_producto', '=', 'p.id_producto')
+					->where('p.id_producto', $id)
+					->where('im.active', 1)
+					->get();
+
+        $imagenes = count($productoImagen);
+
+                    
+        return view('web.detalleProducto',compact('producto','productoImagen','imagenes'));
         }
 }

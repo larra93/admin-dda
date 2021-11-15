@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<h2>CREAR REGISTROS</h2>
+
 @if($message = Session::get('ErrorInsert'))
 
 <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
@@ -79,12 +79,24 @@ $('#imagen').change(function(){
 
 });
 
-    ClassicEditor
-        .create( document.querySelector( '#descripcion' ) )
+ClassicEditor
+        .create( document.querySelector( '#descripcion' ), {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Párrafo', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Encabezado 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Encabezado 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Encabezado 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Encabezado 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', view: 'h5', title: 'Encabezado 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', view: 'h6', title: 'Encabezado 6', class: 'ck-heading_heading3' }
+                ]
+            }
+        } )
         .catch( error => {
-            console.error( error );
+            console.log( error );
         } );
-
 </script>
 @stop
 

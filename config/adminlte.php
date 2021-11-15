@@ -231,7 +231,7 @@ return [
             'topnav_right' => true,
         ],
 
-       
+       /*
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -287,28 +287,44 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],
+        ],*/
         ['header' => 'Secciones'],
         [
             'text' => 'Servicios',
-            'url'  => 'servicios',
+            'url'  => 'admin/servicios',
             'icon' => 'fas fa-briefcase',
         ],
         [
             'text' => 'Productos',
-            'url'  => 'productos',
+            'url'  => '/admin/productos',
             'icon' => 'fas fa-gift',
         ],
         [
             'text' => 'Clientes',
-            'url'  => 'clientes',
-            'icon' => 'fas fa-fw fa-user',
+            'url'  => 'admin/clientes',
+            'icon' => 'fas fa-id-badge',
         ],
         [
             'text' => 'Categorías',
-            'url'  => 'categorias',
+            'url'  => 'admin/categorias',
+            'icon' => 'fas fa-ice-cream',
+        ],
+        [
+            'text' => 'Sobre Nosotros',
+            'url'  => 'admin/sobreNosotros',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Terminos',
+            'url'  => 'admin/terminos',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Como Comprar',
+            'url'  => 'admin/compra',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+       
     ],
 
     /*

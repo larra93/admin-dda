@@ -4,6 +4,9 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\SobreNosotrosController;
+use App\Http\Controllers\TerminosController;
+use App\Http\Controllers\CompraController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +24,13 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::resource('servicios', ServicioController::class);
-Route::resource('productos', ProductoController::class);
-Route::resource('clientes', ClienteController::class);
-Route::resource('categorias', CategoriaController::class);
+Route::resource('admin/servicios', ServicioController::class);
+Route::resource('admin/productos', ProductoController::class);
+Route::resource('admin/clientes', ClienteController::class);
+Route::resource('admin/categorias', CategoriaController::class);
+Route::resource('admin/sobreNosotros', SobreNosotrosController::class);
+Route::resource('admin/terminos', TerminosController::class);
+Route::resource('admin/compra', CompraController::class);
 
 
 Route::get('eliminarImagenProducto/{id}', [ProductoController::class, 'eliminarImagen'])->name('eliminarImagen');
@@ -32,6 +38,18 @@ Route::post('/guardarImagen', [ProductoController::class, 'guardarImagen']);
 Route::post('/guardarImagenGaleria', [ProductoController::class, 'guardarImagenGaleria'])->name('guardarImagenGaleria');
 
 
+
+
+//Vista web
+
+Route::get('/', [ProductoController::class, 'mostrar_index']);
+Route::get('/productos', [ProductoController::class, 'get_productos']);
+Route::get('/detalleProducto/{id}', [ProductoController::class, 'detalle_producto'])->name('detalleProducto');
+
+Route::get('/sobreNosotros', [SobreNosotrosController::class, 'get_sobreNosotros']);
+Route::get('/terminos', [TerminosController::class, 'get_terminos']);
+Route::get('/comoComprar', [CompraController::class, 'get_comoComprar']);
+Route::get('/prensa', [CompraController::class, 'get_prensa']);
 
 
 

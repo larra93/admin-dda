@@ -37,18 +37,18 @@
             
           @csrf
           @method('PUT')
-          <div class="row">
+        <div class="row">
         <button class="btn btn-round btnEditar"> 
             <a href="categorias/create"><i class="fa fa-plus"></i></a>
         </button>
         <button class="btn btn-round btnEditar"> 
-            <a href="{{ url('categorias/'.$categoria->id_categoria.'/edit')}}"><i class="fa fa-edit"></i></a>
+            <a href="{{ url('admin/categorias/'.$categoria->id_categoria.'/edit')}}"><i class="fa fa-edit"></i></a>
         </button>
      
         <form action="{{ route ('categorias.destroy',$categoria->id_categoria)}}" class="form-eliminar" method="POST">
           @csrf
           @method('DELETE')
-          <div class="row">
+          
             <button type="submit" class="btn btn-lg" style="background-color:transparent;"><i class="fa fa-trash"></i></button>
         </div>
           </form> 
@@ -105,7 +105,6 @@
     })
 })
 
- 
 
     $('#categorias').DataTable({
       "lengthMenu": [[5, 10, 50, -1 ], [5, 10, 50, "Todos"]],
