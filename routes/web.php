@@ -45,6 +45,7 @@ Route::post('/guardarImagenGaleria', [ProductoController::class, 'guardarImagenG
 Route::get('/', [ProductoController::class, 'mostrar_index']);
 Route::get('/productos', [ProductoController::class, 'get_productos']);
 Route::get('/detalleProducto/{id}', [ProductoController::class, 'detalle_producto'])->name('detalleProducto');
+Route::post('/producto', [ProductoController::class, 'buscar_producto'])->name('buscar_producto');
 
 Route::get('/sobreNosotros', [SobreNosotrosController::class, 'get_sobreNosotros']);
 Route::get('/terminos', [TerminosController::class, 'get_terminos']);

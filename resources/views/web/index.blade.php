@@ -1,27 +1,128 @@
 @extends('web.main')
 
 @section('contenido')  
+
+@section('css')
+  <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
+  
+  <style>
+
+
+
+ .item {
+	color: #747d89;
+	min-height: 325px;
+    text-align: center;
+	overflow: hidden;
+}
+.thumb-wrapper {
+	padding: 25px 15px;
+	background: #fff;
+	border-radius: 6px;
+	text-align: center;
+	position: relative;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+ .item .img-box {
+	height: 120px;
+	margin-bottom: 20px;
+	width: 100%;
+	position: relative;
+}
+ .item img {	
+	max-width: 100%;
+	max-height: 100%;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+ .item h4 {
+	font-size: 18px;
+}
+ .item h4,  .item p,  .item ul {
+	margin-bottom: 15px;
+}
+ 
+.btn-ver {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 30px 10px 30px;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #fff;
+  background: #C74375;
+  
+}
+
+  .btn-ver:hover {
+  background: #7BC4C4;
+  color: white;
+  box-shadow: 0 8px 28px rgba(32, 107, 251, 0.45);
+}
+
+ .item-price {
+	font-size: 13px;
+	padding: 2px 0;
+}
+ .item-price strike {
+	opacity: 0.7;
+	margin-right: 5px;
+}
+
+
+
+.carousel .wish-icon .fa-heart {
+	color: #ff6161;
+}
+
+
+
+  </style>
+  
+@stop
     
 
-<section id="carruselSection">
+@section('contenido')  
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-          <img class="d-block w-100 img-fluid" src="{{asset('/images/principal/detalleDeAmor1.jpeg')}}" alt="detalles de amor regalos coquimbo">
+
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        <h1 class="col-xs-12 text-md-left text-center">Detalles De Amor</h1>
+        <h2 class="col-xs-12 text-md-left text-center">Conoce las increibles sorpresas que tenemos preparadas para ti</h2>
+        <div class="col-xs-12 text-md-left text-center">
+          <a href="/productos" class="btn-get-started scrollto">Ver Catálogo</a>
         </div>
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+        <div class="social-links col-xs-12 text-md-left text-center">
+          <a href="https://twitter.com/detalledeamor25/" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="https://www.facebook.com/detallitosdeamor25/" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="https://www.instagram.com/detalledeamor25/" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="https://api.whatsapp.com/send?phone=56983147461"  class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+          
+        </div>
+        
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img">
+        <img src="{{asset('/images/principal/detalleDeAmor1.jpeg')}}" class="img-fluid animated" alt="">
+      </div>
     </div>
+  </div>
+
+</section><!-- End Hero -->
+
+
     
-    </section>
   
     <main id="main">
  
@@ -38,7 +139,6 @@
                 <h2 class="wow pulse">Productos Destacados</h2>
                
               </div>
-              <div class="row portfolio-container wow fadeInRight">
       
               <?php  
               $productosHome= mostrar_productosDestacadosHome();
@@ -46,27 +146,31 @@
               
               ?>
       
-      <div class="container">
-          <div class="row">
-          <?php foreach ($resultadoProductoHome as $dato){?>
-          <div class="col-lg-4 mb-4">
-          <div class="card">
-          <img src="{{asset('/images/productos/'.$dato['imagen_destacada'])}}"alt="detalles de amor coquimbo producto" class="card-img-top ">
-            <div class="card-body">
-              <h5 class="card-title"><?php echo $dato['nombre_producto'] ?></h5>
-              <p class="card-text"><?php echo '$'. number_format($dato['precio'], 0, ',', '.'); ?> <br><?php echo  $dato['descripcion_corta'] ?></p>
-             <a href="" class="btn btn-outline-success btn-sm">Read More</a>
+
+
+      <div class="row">
+        <?php foreach ($resultadoProductoHome as $dato){?>
+        <div class="col-sm-3">
+          <div class="thumb-wrapper mt-2 wow fadeInRight">
+            <span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+            <div class="img-box">
+              <img src="{{asset('/images/productos/'.$dato['imagen_destacada'])}}" class="img-fluid" alt="">									
             </div>
-           </div>
+            <div class="thumb-content">
+              <h4><?php echo $dato['nombre_producto'] ?></h4>									
+              
+              <p class="item-price"> <b><?php echo '$'. number_format($dato['precio'], 0, ',', '.'); ?></b></p>
+              <a href="{{ route('detalleProducto', ['id'=> $dato['id_producto']]) }}" class="btn-ver ">Ver producto</a>
+            </div>						
+            
           </div>
-          <?php } ?>
+          
         </div>
+        <?php } ?>
       </div>
       
-            
-             
-            </div>
-            
+      
+           
           </section>  
       
       
@@ -93,10 +197,10 @@
               
                   <div class="icon-box wow fadeInDown" data-wow-delay="0.4s">
                   <div class="icon"><img src="{{asset('/images/servicios/'.$dato['imagen'])}}"></div>
-                    <h4 class="title"><a style="color:black;" href="producto.php?categoria=<?php echo $dato['id_categoria'] ?>"><?php echo $dato['nombre_servicio'];?></h4>
-                    <p class="description"><?php echo $dato['descripcion_servicio'] ?></p>
+                    <h4 class="title"><?php echo $dato['nombre_servicio'];?></h4>
+                    <p><?php echo $dato['descripcion_servicio'] ?></p>
                   </div>
-              </a>
+             
                 </div>
               <?php }?>
               </div>
@@ -125,8 +229,8 @@
       
           foreach ($resultadoCliente as $dato){?>
           
-          <div class="item col-md-12">
-              <img class="imgClientes"  src="{{asset('/images/clientes/'.$dato['imagen'])}}">
+          <div class="col-md-12">
+              <img class="img-fluid"  src="{{asset('/images/clientes/'.$dato['imagen'])}}">
               
           </div>
           <?php } ?>
@@ -250,7 +354,7 @@
       
       
       
-          <!-- ======= Contact Me Section ======= -->
+          <!-- ======= Contact Me Section ======= 
           <section id="contacto" class="contact">
             <div class="container contactoFondo">
       
@@ -266,7 +370,7 @@
                 </div>
       
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.6s">
-                  <form action="forms/mail.php" method="post" role="form">
+                  <form action="mail.php" method="post" role="form">
                     <div class="form-row">
                       <div class="col-md-6 form-group nombreForm">
                         <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" required="required" data-msg="Por favor ingrese su nombre" />
@@ -293,8 +397,10 @@
               </div>
       
             </div>
-          </section><!-- End Contact Me Section -->
-      
+          
+          </section>
+        -->
+          
           
       
         </main><!-- End #main -->

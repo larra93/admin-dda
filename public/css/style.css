@@ -1,9 +1,3 @@
-/**
-* Template Name: Laura - v2.0.0
-* Template URL: https://bootstrapmade.com/laura-free-creative-bootstrap-theme/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 /*--------------------------------------------------------------
 # General
@@ -19,7 +13,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #444444;
   background-color: #FAEBEF;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .pDetalle{
@@ -74,17 +68,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 #header {
-  height: 60px;
+  height: 80px;
   transition: all 0.5s;
   z-index: 997;
   transition: all 0.5s;
   background: #AD5E99;
-  min-height: 74px;
+  min-height: 50px;
 }
 
 #header.header-scrolled {
@@ -334,104 +327,98 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 100vh;
-  background: url("../img/productos/detallesdeamor1.jpeg") top right;
-  background-size: cover;
-  position: relative;
+  height: 90vh;
+  background: #fff;
+  padding-top: 82px;
 }
-
-#hero:before {
-  content: "";
-  background: rgba(0, 0, 0, 0.65);
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-#hero .hero-container {
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0 15px;
-}
-
 #hero h1 {
-  margin: 0 0 10px 0;
-  font-size: 64px;
-  font-family: "Satisfy", serif;
-  color: #fff;
-}
-
-#hero h2 {
-  color: #eee;
-  margin-bottom: 50px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-#hero .btn-scroll {
-  transition: 0.4s;
-  color: rgba(255, 255, 255, 0.6);
-  animation: up-down 1s ease-in-out infinite alternate-reverse both;
-}
-
-#hero .btn-scroll i {
+  margin: 0;
   font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #3e4450;
+}
+#hero h2 {
+  color: #858ea1;
+  margin: 10px 0 30px 0;
+  font-size: 24px;
+}
+#hero .btn-get-started {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 30px 10px 30px;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #fff;
+  background: #C74375;
+
+}
+#hero .btn-get-started:hover {
+  background: #7BC4C4;
+  box-shadow: 0 8px 28px rgba(32, 107, 251, 0.45);
 }
 
-#hero .btn-scroll:hover {
-  color: #7BC4C4;
+#hero .animated {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
-
-@media (min-width: 1024px) {
+@media (max-width: 991px) {
   #hero {
-    background-attachment: fixed;
+    height: 100vh;
+  }
+  #hero .animated {
+    -webkit-animation: none;
+    animation: none;
+  }
+  #hero .hero-img {
+    text-align: center;
+  }
+  #hero .hero-img img {
+    width: 50%;
   }
 }
-
-@media (max-width: 575px) {
+@media (max-width: 768px) {
+  #hero {
+    height: auto;
+  }
   #hero h1 {
-    font-size: 40px;
+    font-size: 28px;
+    line-height: 36px;
   }
   #hero h2 {
-    text-align: center;
+    font-size: 18px;
+    line-height: 24px;
     margin-bottom: 30px;
   }
-
-  .imgContact{
-    padding: 30px 0;
+  #hero .hero-img img {
+    width: 70%;
   }
-  
+}
+@media (max-width: 575px) {
+  #hero .hero-img img {
+    width: 80%;
+  }
 }
 
 @-webkit-keyframes up-down {
   0% {
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
   }
 }
 
 @keyframes up-down {
   0% {
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
   }
 }
-
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
@@ -490,6 +477,9 @@ section {
   .section-title h2 {
     font-size: 28px;
     margin-bottom: 15px;
+  }
+  .imgContact{
+    padding: 30px 0;
   }
   .section-title span {
     font-size: 38px;
@@ -1265,4 +1255,48 @@ border-radius: 35px 0px 35px 0px;
 .imgCategorias{
   width: 100px;
   height: 300px;
+}
+
+.product-small-img img {
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 8px;
+  margin:10px 0px 15px; cursor: pointer;
+  
+}
+.product-small-img{
+  width: 20%;
+  display: flex;
+}
+.img-container img {
+  height: 460px;
+}
+.img-container{
+  padding: 10px;
+  width: 45%;
+}
+
+.descripcion_producto{
+  padding: 15px 15px 20px 150px;
+}
+
+@media (max-width: 600px) {
+.descripcion_producto{
+  padding: 0px 0px 0px 0px;
+}
+}
+
+#hero .social-links {
+  margin-top: 30px;
+}
+#hero .social-links a {
+  font-size: 24px;
+  display: inline-block;
+  color: #45505b;
+  line-height: 1;
+  margin-right: 20px;
+  transition: 0.3s;
+}
+#hero .social-links a:hover {
+  color: #C74375;
 }

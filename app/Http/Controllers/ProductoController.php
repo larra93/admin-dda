@@ -171,7 +171,9 @@ class ProductoController extends Controller
 
         $producto = Producto::find($id);
         $imagenPreviaDestacada = $producto->imagen_destacada;
+        
 
+        $producto_destacado = $request->destacado == null ? 0 : 1;
 
        
 
@@ -193,9 +195,10 @@ class ProductoController extends Controller
             if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
 
-            $producto->nombre_producto= $request->nombre;
+              $producto->nombre_producto= $request->nombre;
               $producto->descripcion_producto= $request->descripcion;
               $producto->precio= $request->precio;
+              $producto->destacado= $producto_destacado;
               $producto->imagen_destacada = $this->subirImagenes($imagen, public_path('images/productos'));
               $producto->id_categoria= $request->categoria;
               $producto->save();
@@ -203,6 +206,7 @@ class ProductoController extends Controller
             }else{
             $producto->nombre_producto= $request->nombre;
               $producto->descripcion_producto= $request->descripcion;
+              $producto->destacado= $producto_destacado;
               $producto->precio= $request->precio;
               $producto->id_categoria= $request->categoria;
               $producto->save();
@@ -225,7 +229,7 @@ class ProductoController extends Controller
 
         }
                 
-            return redirect('/productos')->with('Result',[
+            return redirect('/admin/productos')->with('Result',[
                 'status' => 'success',
                 'content' => 'Producto registrado con exito'
             ]);
@@ -267,9 +271,9 @@ class ProductoController extends Controller
         $destino = public_path('images/productos');
         unlink($destino.'/'.$imagenPrevia);
         unlink($destino.'/thumbs/'.$imagenPrevia);
-        return redirect('/admin/clientes')->with('Result',[
+        return redirect('/admin/productos')->with('Result',[
             'status' => 'success',
-            'content' => 'Cliente eliminado con exito'
+            'content' => 'Imagen eliminada con exito'
         ]);
             
     }
@@ -322,9 +326,21 @@ class ProductoController extends Controller
             return view('web.index');
         }
 
-        public function get_productos(Type $var = null)
+        public function get_productos()
         {
             return view('web.productos');
+        }
+        public function buscar_producto(Request $request)
+        {
+            $producto = DB::table('producto')
+            
+            ->where('nombre_producto', 'like', '%' . $request->producto . '%')
+            ->orWhere('descripcion_producto', 'like', '%' . $request->producto . '%')
+            ->get();
+
+            $resultados = count($producto);
+
+            return view('web.producto',compact('producto','resultados'));
         }
 
         public function detalle_producto($id)

@@ -23,16 +23,20 @@
     box-shadow: 0px 2px 20px 0px #f2f2f2;
     border-radius: 10px;
   }
+
+  .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+     
   </style>
 
 
 @stop
 
 @section('content_header')
-    
-    <div class="alert alert-default-info" role="alert">
-        <h1>Editar Producto</h1>
-      </div>
+<div class="alert alert-default-danger" role="alert">
+  Editar Producto
+</div>
 @stop
 
 @section('content')
@@ -50,13 +54,19 @@
 </div>
 
 @endif
-<form action="/productos/{{$producto->id_producto}}"   enctype="multipart/form-data" method="POST">
+<form action="/admin/productos/{{$producto->id_producto}}"   enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
     @csrf
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
     <input  name="nombre" type="text" value="{{$producto->nombre_producto}}" class="form-control" tabindex="1">    
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox"  id="flexCheckDefault" name="destacado" value="{{$producto->destacado}}" {{ isset($producto->destacado) ? ($producto->destacado == 1 ? 'checked' : '') : '' }}>
+    <label class="form-check-label" for="flexCheckDefault">
+      Destacar Producto
+    </label>
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
@@ -81,11 +91,20 @@
         @endforeach
     </select>  
     </div>
+
+    
   <div class="mb-3">
     <label for="" class="form-label">Imagen Destacada</label>
     <input type="file" id="imagen" name="imagen"><br>
-    <img id="imagenAnterior" src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" width=100 >
-    <div  class ="d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
+    <div class="container text-center">
+
+      <a href="{{ asset('images/productos/'.$producto->imagen_destacada) }}" class="fancybox" rel="ligthbox">
+        <img class="img-fluid mb-2" width="300" src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" >              
+    </a>
+    
+    </div>
+    
+   
     
   </div>
 
@@ -121,7 +140,7 @@
 
 
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-  <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
+  <a href="/admin/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
 </form>
 
 
@@ -247,7 +266,7 @@ $(document).ready(function() {
         
 		$(this).removeClass('transition');
 	});
-
+/*
 
 function filePreview(input){
   if(input.files && input.files[0]){
@@ -263,7 +282,7 @@ function filePreview(input){
 $('#imagen').change(function(){
   filePreview(this);
 })
-
+*/
 
 });
 ClassicEditor

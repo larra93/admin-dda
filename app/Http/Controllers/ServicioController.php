@@ -96,7 +96,7 @@ class ServicioController extends Controller
                 'id_categoria'=>$request->categoria,
             ]); 
     
-            return redirect('/servicios')->with('Result',[
+            return redirect('/admin/servicios')->with('Result',[
                 'status' => 'success',
                 'content' => 'Servicio registrado con exito'
             ]);
@@ -205,7 +205,7 @@ class ServicioController extends Controller
               $servicio->id_categoria= $request->categoria;
               $servicio->save();
 
-              return redirect('/servicios')->with('Result',[
+              return redirect('/admin/servicios')->with('Result',[
                 'status' => 'success',
                 'content' => 'Servicio modificado con exito'
             ]);
@@ -227,7 +227,7 @@ class ServicioController extends Controller
             $destino = public_path('images/servicios');
             unlink($destino.'/'.$imagenPrevia);
             unlink($destino.'/thumbs/'.$imagenPrevia);
-            return redirect('/servicios')->with('Result',[
+            return redirect('/admin/servicios')->with('Result',[
                 'status' => 'success',
                 'content' => 'Servicio eliminado con exito'
             ]);

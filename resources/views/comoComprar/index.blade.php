@@ -6,11 +6,20 @@
    <!-- <link rel="stylesheet" href="/css/admin_custom.css">-->
     <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
    
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
     Cómo Comprar
   </div>
 @stop
@@ -21,7 +30,7 @@
 
 <div class="table-responsive-sm">
 <table id="comprar" class="table mt-4" style="width: 100%">
-  <thead class="bg-primary text-white">
+  <thead class="bg-primary2 text-white">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>

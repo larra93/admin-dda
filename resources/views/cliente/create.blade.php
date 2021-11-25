@@ -6,11 +6,19 @@
   <!--  <link rel="stylesheet" href="/css/admin_custom.css">-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
   
+  <style>
+    .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+  </style>
   
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
   Nuevo cliente
 </div>
 @stop
@@ -30,7 +38,7 @@
 </div>
 
 @endif
-<form action="/clientes" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
+<form action="/admin/clientes" method="post" enctype="multipart/form-data" class="dropzone" id="my-great-dropzone">
 @csrf
 </form>
 

@@ -6,11 +6,19 @@
    <!-- <link rel="stylesheet" href="/css/admin_custom.css">-->
     <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
    
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
   Servicios
  </div>
 @stop
@@ -21,7 +29,10 @@
 
 <div class="table-responsive-sm">
 <table id="servicios" class="table mt-4" style="width: 100%">
-  <thead class="bg-primary text-white">
+  <button class="btn btn-primary"> 
+    <a style="color: white" href="servicios/create">Agregar Servicio</a>
+</button><br><br>
+  <thead class="bg-primary2 text-white">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>
@@ -44,9 +55,7 @@
           @csrf
             @method('PUT')
           <div class="row">
-          <button class="btn btn-round btnEditar"> 
-              <a href="servicios/create"><i class="fa fa-plus"></i></a>
-          </button>
+          
           <button class="btn btn-round btnEditar"> 
               <a href="{{ url('admin/servicios/'.$servicio->id_servicio.'/edit')}}"><i class="fa fa-edit"></i></a>
           </button>

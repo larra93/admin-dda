@@ -8,10 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/app.css">
     
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
     Editar Sobre Nosotros
   </div>
 @stop
@@ -85,10 +93,23 @@ filePreview(this);
 
 });
 ClassicEditor
-    .create( document.querySelector( '#descripcion' ) )
-    .catch( error => {
-        console.error( error );
-    } );
+        .create( document.querySelector( '#descripcion' ), {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Párrafo', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Encabezado 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Encabezado 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Encabezado 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Encabezado 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', view: 'h5', title: 'Encabezado 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', view: 'h6', title: 'Encabezado 6', class: 'ck-heading_heading3' }
+                ]
+            }
+        } )
+        .catch( error => {
+            console.log( error );
+        } );
 
 </script>
  

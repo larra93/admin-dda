@@ -6,11 +6,20 @@
     <!-- <link rel="stylesheet" href="/css/admin_custom.css">-->
     <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
    
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
   Clientes
 </div>
 @stop
@@ -22,7 +31,10 @@
   
   <div class="table-responsive-sm"><br>
   <table id="clientes" class="table mt-4" style="width: 100%">
-    <thead class="bg-primary text-white">
+    <button class="btn btn-primary"> 
+      <a style="color: white" href="clientes/create">Agregar Cliente</a>
+  </button><br><br>
+    <thead class="bg-primary2 text-white">
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Imagen</th>
@@ -42,7 +54,7 @@
           <form action="{{ route ('clientes.destroy',$cliente->id_cliente)}}" class="form-eliminar" method="POST">
             @csrf
             @method('DELETE')
-              <a href="clientes/create"><i class="fa fa-plus px-2"></i></a>
+            
               <button class="btn btn-lg" style="background-color:transparent;">
                 <i class="fa fa-trash"></i>
              </button>

@@ -35,7 +35,7 @@
 			foreach ($resultadoProducto as $datoProducto) { ?>
        
 				<div class="product-item" category=<?php echo $datoProducto['alias'];?>>
-					<a href="{{ route('detalleProducto',$datoProducto['id_producto']) }}"><img class="imgDetalle2" src="{{asset('/images/productos/'.$datoProducto['imagen_destacada'])}}" >
+					<a href="{{ route('detalleProducto',$datoProducto['id_producto']) }}"><img class="img-fluid" src="{{asset('/images/productos/'.$datoProducto['imagen_destacada'])}}" >
                         <a href="{{ route('detalleProducto',$datoProducto['id_producto']) }}"> <?php echo $datoProducto['nombre_producto'] ?> </a>
 
       

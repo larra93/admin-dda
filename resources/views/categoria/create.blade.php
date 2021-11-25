@@ -4,10 +4,19 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
     Crear Categoría
   </div>
 @stop
@@ -27,7 +36,7 @@
 </div>
 
 @endif
-<form action="/categorias"   enctype="multipart/form-data" method="POST">
+<form action="/admin/categorias"   enctype="multipart/form-data" method="POST">
     @csrf
   <div class="mb-3">
     <label for="" class="form-label">Nombre</label>
@@ -37,7 +46,7 @@
  
 
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-  <a href="/categorias" class="btn btn-secondary" tabindex="5">Cancelar</a>
+  <a href="/admin/categorias" class="btn btn-secondary" tabindex="5">Cancelar</a>
 </form>
 @stop
 

@@ -4,11 +4,20 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/app.css">
+
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
     
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
     Editar Como Comprar
   </div>
 @stop

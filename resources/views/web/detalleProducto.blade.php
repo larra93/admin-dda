@@ -11,79 +11,92 @@
 
  
 
-  <div class="wrap">
-		<div class="section-title">
+  
+		<div class="mt-5">
      
-      
-      
-    </div>
-		<div class="store-wrapper">
-
-    <div class="row">
-    
-    
-  
-
-    
-    <div class="col-md-4 wow fadeInLeft">
-    <img src="{{asset('/images/productos/'.$producto->imagen_destacada)}}" class="img-fluid" alt="">
-    <br>
- 
-    <div class="cajaPrecio">
-    <h4 style="text-align: center; font-size: 30px;"><?php echo '$'. number_format($producto->precio, 0, ',', '.');?></h4>
-    </div>  
-  </div>
-
-  
-  
-    <div class="col-md-6">
       <h2><?php echo $producto->nombre_producto;?></h2>
-
       
-      <p class="pDetalle wow fadeIn">
-      <?php echo $producto->descripcion_producto;?> 
-      
-      </p>
-      </div>
     </div>
 		
-	</div>
-  </div>
-
-
-  <br>
-  
-  </div>
- 
-  <div class="container-fluid">
-    
-      @if($imagenes > 1)
-      <div  class="owl-carousel testimonials-carousel">
-  @foreach($productoImagen as $imagenProducto)
-  
-    
-      <div class="item col-md-12">
-          <img class="imgDetalle "  src="{{asset('/images/productos/'.$imagenProducto->imagen)}}" alt="desayunos a domicilio coquimbo la serena">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="product">
           
-      </div>
-     @endforeach
+            <img src="{{asset('/images/productos/'.$producto->imagen_destacada)}}" class="img-fluid" id="imageBox" alt="">
+          
+          <div class="cajaPrecio">
+            <h4 style="text-align: center; font-size: 30px;"><?php echo '$'. number_format($producto->precio, 0, ',', '.');?></h4>
+            </div> 
+          
+        
      
+    
+        
+
+      
       </div>
+    </div>
+          
+      <div class="col-md-8">
+        <p class="descripcion_producto" style="text-align: justify"><?php echo $producto->descripcion_producto;?> </p>
+      </div>
+
+      @if ($imagenes > 1)
+      <div  class="owl-carousel testimonials-carousel mt-3">
+        @foreach($productoImagen as $imagenProducto)
+                 <img src="{{asset('/images/productos/'.$imagenProducto->imagen)}}" alt="desayunos a domicilio coquimbo la serena">
+                 @endforeach
+               </div>
       @else
       @foreach($productoImagen as $imagenProducto)
-
-      <div class="text-center">
-       
-        <img class="rounded"  width="300" height="400"  src="{{asset('/images/productos/'.$imagenProducto->imagen)}}" alt="desayunos a domicilio coquimbo la serena">
+      <div class="container text-center"><br>
+      <img src="{{asset('/images/productos/'.$imagenProducto->imagen)}}" width="300" class="img-fluid" alt="desayunos a domicilio coquimbo la serena">
+     @endforeach
       </div>
-      @endforeach
       @endif
+
+      
     </div>
+  </div>
+  
+  <!--
+    <div class="row">
   
     
+      <div class="product">
+        <div class="col-md-4">
+          <img src="{{asset('/images/productos/'.$producto->imagen_destacada)}}" class="img-fluid" id="imageBox" alt="">
+        
+        <div class="cajaPrecio">
+          <h4 style="text-align: center; font-size: 30px;"><?php echo '$'. number_format($producto->precio, 0, ',', '.');?></h4>
+          </div> 
+        
+      </div>
+      
+    
+      <div class="product-small-img">
+        <img src="{{asset('/images/productos/'.$producto->imagen_destacada)}}" id="imageBox" onclick="galery(this)" alt="">
+        
+        @foreach($productoImagen as $imagenProducto)
+        <img src="{{asset('/images/productos/'.$imagenProducto->imagen)}}" onclick="galery(this)" alt="desayunos a domicilio coquimbo la serena">
+        @endforeach
+      </div>
+    </div>
+  
+  
+  </div>
+     
 
+      <div class="row">
+              <div class="col-sm-12 d-flex justify-content-center">
+                  <p style="text-align: justify"><?php echo $producto->descripcion_producto;?> </p>
+          </div>
+      </div>
+
+    -->
   
   
+  </div>
 
 
 </section>
@@ -102,14 +115,16 @@
 <script src="{{ asset('/vendor2/waypoints/jquery.waypoints.min.js')}}"></script>
 <script src="{{ asset('/vendor2/counterup/counterup.min.js')}}"></script>
 <script src="{{ asset('/vendor2/owl.carousel/owl.carousel.js')}}"></script>
-<script type="text/javascript">
+@section('js')
+    <script>
 
-
-$(window).on('load', function() { 
-$(".loader").fadeOut("slow");
- 
-});
-</script>
+      function galery(smallImg) {
+        var fullImg = document.getElementById("imageBox");
+        fullImg.src=smallImg.src;
+      }
+    </script>
+    
+@endsection
 
 
 

@@ -1,13 +1,31 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Editar Servicio')
 
-@section('content_header')
-    <h1>Nuevo Servicio</h1>
+@section('css')
+  
+    <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
+ </style>
+   
 @stop
 
+@section('content_header')
+<div class="alert alert-default-danger" role="alert">
+  Editar Servicio
+</div>
+@stop
+
+
+
 @section('content')
-<h2>CREAR REGISTROS</h2>
+
 @if($message = Session::get('ErrorInsert'))
 
 <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
@@ -53,8 +71,9 @@
     <input type="file" id="imagen" name="imagen" >
   </div>
  
-  <a href="/servicios" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+  <a href="/admin/servicios" class="btn btn-secondary" tabindex="5">Cancelar</a>
+  
 </form>
 
 <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>

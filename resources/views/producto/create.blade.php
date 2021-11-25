@@ -19,16 +19,24 @@
     box-shadow: 0px 2px 20px 0px #f2f2f2;
     border-radius: 10px;
   }
+
+  .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+      .nav-link.active {
+        background-color: #7BC4C4 !important;
+      }
   </style>
   
 @stop
 
 @section('content_header')
-    <h1>Nuevo Producto</h1>
+<div class="alert alert-default-danger" role="alert">
+  Nuevo Producto
+</div>
 @stop
 
 @section('content')
-<h2>Crear Producto</h2>
 @if($message = Session::get('ErrorInsert'))
 
 <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
@@ -42,20 +50,20 @@
 </div>
 
 @endif
-  <form action="/productos" name="demoform" id="demoform" method="POST" class="dropzone" enctype="multipart/form-data">
+  <form action="/admin/productos" name="demoform" id="demoform" method="POST" class="dropzone" enctype="multipart/form-data">
     @csrf
   <div class="mb-3">
     <input type="hidden" class="userid" name="userid" id="userid" value="">
     <label for="" class="form-label">Nombre</label>
-    <input  name="nombre" type="text" class="form-control" tabindex="1">    
+    <input  name="nombre" type="text" class="form-control" tabindex="1" required>    
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
-    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion"></textarea>
+    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion" required></textarea>
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Precio</label>
-    <input type="number" class="form-control" name="precio">
+    <input type="number" class="form-control" name="precio" required>
   </div>
   <div class="mb-3">
     <label for="exampleFormControlSelect1">Categoría</label>
@@ -70,12 +78,12 @@
     </div>
   <div class="mb-3">
     <label for="" class="form-label">Imagen Destacada</label>
-    <input type="file" id="imagen" name="imagen" >
+    <input type="file" id="imagen" name="imagen" required>
   </div>
 
   <div class="form-group">
     <div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
-      <span>Upload file</span>
+      <span>Seleccione o arrastre imagenes.</span>
     </div>
     <div class="dropzone-previews"></div>
   </div>
@@ -86,9 +94,9 @@
 
  
 
-
-  <a href="/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+  <a href="/admin/productos" class="btn btn-secondary" tabindex="5">Cancelar</a>
+
 
 </form>
 

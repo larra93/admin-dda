@@ -7,7 +7,7 @@
 @stop
 
 @section('content_header')
-<div class="alert alert-default-info" role="alert">
+<div class="alert alert-default-danger" role="alert">
     Editar Categoría
   </div>
 @stop
@@ -27,7 +27,7 @@
 </div>
 
 @endif
-<form action="/categorias/{{$categoria->id_categoria}}"   enctype="multipart/form-data" method="POST">
+<form action="/admin/categorias/{{$categoria->id_categoria}}"   enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
   <div class="mb-3">
@@ -38,7 +38,7 @@
  
 
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-  <a href="/categorias" class="btn btn-secondary" tabindex="5">Cancelar</a>
+  <a href="/admin/categorias" class="btn btn-secondary" tabindex="5">Cancelar</a>
 </form>
 
 @stop

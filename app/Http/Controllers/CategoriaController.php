@@ -70,7 +70,7 @@ class CategoriaController extends Controller
             
             ]); 
     
-            return redirect('/categorias')->with('Result',[
+            return redirect('/admin/categorias')->with('Result',[
                 'status' => 'success',
                 'content' => 'Categoría registrada con exito'
             ]);
@@ -145,7 +145,7 @@ class CategoriaController extends Controller
              
               $categoria->save();
 
-              return redirect('/categorias')->with('Result',[
+              return redirect('/admin/categorias')->with('Result',[
                 'status' => 'success',
                 'content' => 'Categoría modificada con exito'
             ]);
@@ -164,7 +164,7 @@ class CategoriaController extends Controller
        
         $categoria->active = 0;
         $categoria->save();
-        return redirect('/categorias')->with('Result',[
+        return redirect('/admin/categorias')->with('Result',[
             'status' => 'success',
             'content' => 'Categoría eliminada con exito'
         ]);

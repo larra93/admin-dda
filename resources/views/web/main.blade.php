@@ -21,10 +21,15 @@
 
   <!-- Vendor CSS Files -->
  
-  <link href="{{asset('/vendor2/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('/vendor2/icofont/icofont.min.css')}}" rel="stylesheet">
-  <link href="{{asset('/vendor2/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+
+
+  <link href="{{asset('vendor2/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('vendor2/icofont/icofont.min.css')}}" rel="stylesheet">
+  <link href="{{asset('vendor2/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
   <link href="{{asset('/vendor2/owl.carousel/assets/owl.carousel.css')}}" rel="stylesheet">
+ 
+
+  
   
 
   <!-- Template Main CSS File -->
@@ -34,10 +39,11 @@
     </head>
 
     <body>
-    @include('web.navBar')
+    
   
 
     @yield('contenido')
+    @include('web.navBar')
     <a href="https://api.whatsapp.com/send?phone=56983147461" class="float">
       <i class="bx bxl-whatsapp my-float"></i>
       </a>
@@ -49,7 +55,7 @@
   
 
 
-
+      @yield('js')
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="{{ asset('/vendor2/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('vendor2/jquery.easing/jquery.easing.min.js')}}"></script>
