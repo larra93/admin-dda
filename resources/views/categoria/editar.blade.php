@@ -4,6 +4,13 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <style>
+      .sidebar-dark-primary{
+        background: #AD5E99 !important;
+      }
+     
+    </style>
 @stop
 
 @section('content_header')

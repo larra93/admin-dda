@@ -56,8 +56,19 @@ $(document).ready(function() {
     paramName: "file", // The name that will be used to transfer the file
     maxFilesize: 2, // MB
     acceptedFiles: '.jpeg, .jpg, .png',
+
+    init: function () {
+        var totalFiles = 0,
+            completeFiles = 0;
+            this.on("complete", function (file) {
+          alert("All files have uploaded ");
+      });
+    }
+    
   };
 
+
+  
 
 
 });

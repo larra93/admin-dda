@@ -96,20 +96,20 @@
   <div class="mb-3">
     <label for="" class="form-label">Imagen Destacada</label>
     <input type="file" id="imagen" name="imagen"><br>
-    <div class="container text-center">
-
-      <a href="{{ asset('images/productos/'.$producto->imagen_destacada) }}" class="fancybox" rel="ligthbox">
-        <img class="img-fluid mb-2" width="300" src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" >              
-    </a>
     
+    <div class="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center">
+      <a href="{{ asset('images/productos/'.$producto->imagen_destacada) }}" class="fancybox" rel="ligthbox">
+        <img id="imagenAnterior" class="img-fluid mb-2" width="300" src="{{ asset('images/productos/thumbs/'.$producto->imagen_destacada) }}" >              
+    </a>
     </div>
+   
     
    
     
   </div>
 
 
-
+  <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
   
 
   <div class="container-fluid">
@@ -199,23 +199,7 @@
 </script>
 @endif
 <script>
-/*
-Dropzone.options.myGreatDropzone = { // camelized version of the `id`
-    paramName: "file", // The name that will be used to transfer the file
-    maxFilesize: 2, // MB
-    addRemoveLinks: true,
-    autoProcessQueue: false,
-    acceptedFiles: '.jpeg, .jpg, .png',
 
-    init: function () {
-      myGreatDropzone.on("complete", function (file) {
-     
-        window.location.reload();
-      
-    });
-  }
-    
-  };*/
 
 
   Dropzone.autoDiscover = false;
@@ -234,12 +218,9 @@ $('#uploadfiles').click(function(){
      
     Swal.fire({
       icon: 'success',
-      title: 'Producto guardado con éxito',
+      title: 'Galería  guardada con éxito',
       showConfirmButton: false,
-      timer: 2000
-    }).then(function() {
-        window.location.reload(); 
-    });
+    })
  
 
    
@@ -266,13 +247,14 @@ $(document).ready(function() {
         
 		$(this).removeClass('transition');
 	});
-/*
+
+
 
 function filePreview(input){
   if(input.files && input.files[0]){
     var reader = new FileReader();
     reader.onload = function(e){
-        document.getElementById('imagenAnterior').style.visibility='hidden';
+      document.getElementById('imagenAnterior').style.display='none';
       $('#imagenPreview').html("<img width=300 class='img-fluid' src='"+e.target.result+"' />");
     }
     reader.readAsDataURL(input.files[0]);
@@ -282,7 +264,7 @@ function filePreview(input){
 $('#imagen').change(function(){
   filePreview(this);
 })
-*/
+
 
 });
 ClassicEditor

@@ -5,6 +5,7 @@
 @section('css')
   
     <link href="{{ asset('/css/toastr.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_custom.css">
     <style>
       .sidebar-dark-primary{
         background: #AD5E99 !important;
@@ -66,9 +67,21 @@
     
     </select>  
     </div>
+  
+
   <div class="mb-3">
     <label for="" class="form-label">Imagen</label>
-    <input type="file" id="imagen" name="imagen" >
+    <input type="file" id="imagen" name="imagen"><br>
+    
+    <div class="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center">
+      
+        <img id="imagenAnterior" class="img-fluid mb-2" width="300" src="{{ asset('images/servicio/thumbs/'.$servicio->imagen) }}" >              
+    
+    </div>
+   
+    
+   
+    
   </div>
  
   <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
@@ -79,9 +92,6 @@
 <div  class ="mb-3 mt-3 d-flex flex-row justify-content-center alig-items-center" id="imagenPreview"></div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
 
 @section('js')
  
@@ -92,7 +102,8 @@ function filePreview(input){
   if(input.files && input.files[0]){
     var reader = new FileReader();
     reader.onload = function(e){
-      $('#imagenPreview').html("<img width=600 class='img-fluid' src='"+e.target.result+"' />");
+      document.getElementById('imagenAnterior').style.display='none';
+      $('#imagenPreview').html("<img width=300 class='img-fluid' src='"+e.target.result+"' />");
     }
     reader.readAsDataURL(input.files[0]);
   }

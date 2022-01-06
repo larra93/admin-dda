@@ -59,7 +59,7 @@
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Descripción</label>
-    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion" required></textarea>
+    <textarea class="form-control"  placeholder="Descripción" id="descripcion" name="descripcion" ></textarea>
   </div>
   <div class="mb-3">
     <label for="" class="form-label">Precio</label>
@@ -160,6 +160,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
               +window.location.reload(); 
     });
 						$("#userid").val(userid); // inseting userid into hidden input field
+            console.log(userid)
 	    				//process the queue
 	    				myDropzone.processQueue();
 	    			}else{
